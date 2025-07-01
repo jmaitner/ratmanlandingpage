@@ -1,20 +1,31 @@
 <template>
   <div class="min-h-screen bg-[#f9fafb]">
     <!-- Navigation -->
-    <nav class="w-full bg-white shadow-md border-b border-gray-100 sticky top-0 z-30">
-      <UContainer class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
-        <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-          <h1 class="text-xl font-bold text-[#1E1E1E]">Florida BDI Course</h1>
-        </div>
-        <div class="flex-1 flex justify-end items-center gap-4 min-w-[48px] mt-2 sm:mt-0">
-          <UButton to="/login" variant="ghost" color="primary" class="font-semibold text-[#1E1E1E]">
-            Login
-          </UButton>
-          <UButton to="/login" color="primary" class="font-semibold">
-            Get Started
-          </UButton>
-        </div>
-      </UContainer>
+    <nav
+      :class="[
+        'w-full z-30 transition-all duration-500 flex items-center justify-between px-8 py-4',
+        isAtTop
+          ? 'bg-transparent absolute top-0 left-0'
+          : 'bg-white sticky top-0 left-0 border-b border-gray-100 shadow-md'
+      ]"
+    >
+      <h1
+        :class="[
+          'text-xl font-bold transition-colors duration-300',
+          isAtTop ? 'text-white' : 'text-[#1E1E1E]'
+        ]"
+      >
+        Road Ready
+      </h1>
+      <div class="flex gap-4 items-center">
+        <a :class="['font-semibold transition-colors duration-300', isAtTop ? 'text-white' : 'text-[#1E1E1E]']" href="/login">Login</a>
+        <a :class="[
+          'rounded px-4 py-2 font-semibold border transition-colors duration-300',
+          isAtTop
+            ? 'bg-white text-[#3B82F6] border-white hover:bg-[#3B82F6] hover:text-white'
+            : 'bg-[#3B82F6] text-white border-[#3B82F6] hover:bg-white hover:text-[#3B82F6]'
+        ]" href="/signup">Get Started</a>
+      </div>
     </nav>
 
     <!-- Hero Section -->
@@ -39,7 +50,7 @@
           <!-- Hero Content -->
           <div class="flex-1 text-center lg:text-left space-y-8">
             <div class="space-y-4">
-              <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
+              <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight heading">
                 Master Defensive Driving
                 <span class="text-[#A90F1D]">in Florida</span>
               </h1>
@@ -90,7 +101,7 @@
       <UContainer class="max-w-7xl mx-auto px-4">
         <div class="text-center space-y-12">
           <div class="space-y-4">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 heading">
               How It Works
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -110,7 +121,7 @@
                     1
                   </div>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900">Register</h3>
+                <h3 class="text-xl font-bold text-gray-900 heading">Register</h3>
                 <p class="text-gray-600">Create your account and verify your eligibility for the Basic Driver Improvement course.</p>
               </div>
               
@@ -124,7 +135,7 @@
                     2
                   </div>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900">Learn</h3>
+                <h3 class="text-xl font-bold text-gray-900 heading">Learn</h3>
                 <p class="text-gray-600">Complete interactive modules covering defensive driving, traffic laws, and safety techniques.</p>
               </div>
               
@@ -138,7 +149,7 @@
                     3
                   </div>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900">Certificate</h3>
+                <h3 class="text-xl font-bold text-gray-900 heading">Certificate</h3>
                 <p class="text-gray-600">Receive your completion certificate and submit to the FLHSMV to satisfy your requirements.</p>
               </div>
             </div>
@@ -152,7 +163,7 @@
       <UContainer class="max-w-7xl mx-auto px-4">
         <div class="space-y-12">
           <div class="text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 heading">
               Course Modules
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -187,12 +198,27 @@
       </UContainer>
     </section>
 
+    <!-- Benefits Icon Grid Section -->
+    <section class="py-16 md:py-24 bg-[#F0F6FF]">
+      <UContainer class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="benefit in benefits" :key="benefit.title" class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 rounded-full bg-[#3B82F6] flex items-center justify-center mb-3">
+              <UIcon :name="benefit.icon" class="w-8 h-8 text-white" />
+            </div>
+            <div class="text-[#1E293B] font-semibold text-base">{{ benefit.title }}</div>
+            <div class="text-gray-500 text-sm mt-1">{{ benefit.description }}</div>
+          </div>
+        </div>
+      </UContainer>
+    </section>
+
     <!-- Why Choose Us Section -->
     <section class="py-16 md:py-24 bg-white">
       <UContainer class="max-w-7xl mx-auto px-4">
         <div class="space-y-12">
           <div class="text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 heading">
               Why Choose Our Course?
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -255,7 +281,7 @@
       <UContainer class="max-w-7xl mx-auto px-4">
         <div class="space-y-12">
           <div class="text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 heading">
               What Our Students Say
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -287,7 +313,7 @@
       <UContainer class="max-w-7xl mx-auto px-4">
         <div class="space-y-12">
           <div class="text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 heading">
               Simple, Transparent Pricing
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -335,7 +361,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <!-- Company Info -->
           <div class="space-y-4">
-            <h3 class="text-xl font-bold">Florida BDI Course</h3>
+            <h3 class="text-xl font-bold heading">Florida BDI Course</h3>
             <p class="text-gray-400 text-sm">
               State-approved Basic Driver Improvement course provider. Helping Florida drivers stay safe and compliant.
             </p>
@@ -343,7 +369,7 @@
           
           <!-- Quick Links -->
           <div class="space-y-4">
-            <h4 class="font-bold">Quick Links</h4>
+            <h4 class="font-bold heading">Quick Links</h4>
             <ul class="space-y-2 text-sm text-gray-400">
               <li><a href="#" class="hover:text-white transition">About Us</a></li>
               <li><a href="#" class="hover:text-white transition">Course Overview</a></li>
@@ -354,7 +380,7 @@
           
           <!-- Contact -->
           <div class="space-y-4">
-            <h4 class="font-bold">Contact</h4>
+            <h4 class="font-bold heading">Contact</h4>
             <ul class="space-y-2 text-sm text-gray-400">
               <li class="flex items-center gap-2">
                 <UIcon name="i-heroicons-envelope" class="w-4 h-4" />
@@ -369,7 +395,7 @@
           
           <!-- Compliance -->
           <div class="space-y-4">
-            <h4 class="font-bold">Compliance</h4>
+            <h4 class="font-bold heading">Compliance</h4>
             <div class="space-y-2 text-sm text-gray-400">
               <p>FLHSMV Approved Provider</p>
               <p>Course #: BDI-2024-001</p>
@@ -391,6 +417,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
 // Preview modules for the landing page
 const previewModules = [
   {
@@ -507,4 +535,19 @@ const pricingFeatures = [
   'Mobile-friendly design',
   '24/7 customer support'
 ]
+
+const isAtTop = ref(true)
+
+const handleScroll = () => {
+  isAtTop.value = window.scrollY < 50
+  console.log('isAtTop:', isAtTop.value, 'scrollY:', window.scrollY)
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  handleScroll()
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script> 
